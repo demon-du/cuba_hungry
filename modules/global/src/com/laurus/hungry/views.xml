@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+
+    <view entity="hungry_Dish" name="dish-view" extends="_local">
+        <property name="picture" view="_minimal"/>
+        <property name="store" view="_minimal"/>
+    </view>
+    <view entity="hungry_Order" name="order-view" extends="_local">
+        <property name="user" view="_minimal"/>
+        <property name="store" view="_minimal"/>
+        <property name="orderDetails" view="_minimal"/>
+    </view>
+    <view entity="hungry_OrderDetail" name="orderDetail-view" extends="_local">
+        <property name="order" view="_minimal"/>
+        <property name="store" view="_minimal"/>
+        <property name="dish" view="_minimal">
+            <property name="price"/>
+        </property>
+    </view>
+</views>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.laurus.hungry.web.screens.orderdetail">
+    <data>
+        <instance id="orderDetailDc"
+                  class="com.laurus.hungry.entity.OrderDetail"
+                  view="orderDetail-view">
+            <loader/>
+        </instance>
+        <collection id="dishesDc" class="com.laurus.hungry.entity.Dish" view="_local">
+            <loader id="dishesDl">
+                <query>
+                    <![CDATA[select e from hungry_Dish e where e.store = :store and e.id not in :dishIds]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="orderDetailDc">
+            <column width="250px">
+                <pickerField id="storeField" property="store" visible="false" required="true">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <lookupField id="dishField" property="dish" optionsContainer="dishesDc" caption="Dish"
+                             captionProperty="namePrice"/>
+                <textField id="quantityField" property="quantity" required="true"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

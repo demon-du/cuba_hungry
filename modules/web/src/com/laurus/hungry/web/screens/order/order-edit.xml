@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.laurus.hungry.web.screens.order">
+    <data>
+        <instance id="orderDc"
+                  class="com.laurus.hungry.entity.Order"
+                  view="order-view">
+            <loader id=" "/>
+        </instance>
+        <collection id="orderDetailsDc" class="com.laurus.hungry.entity.OrderDetail" view="orderDetail-view">
+            <loader id="orderDetailsDl">
+                <query>
+                    <![CDATA[select e from hungry_OrderDetail e where ( (e.order is null and e.userKey = :userKey ) or e.order = :order ) and e.store = :store ]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="orderDc">
+            <column width="250px">
+                <pickerField id="storeField" property="store" required="true">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <groupBox id="groupBox" caption="OrderDetails" width="800px">
+                    <groupTable id="orderDetailTable" height="300px" width="800px" dataContainer="orderDetailsDc">
+                        <columns>
+                            <column id="dish.name"/>
+                            <column id="dish.price"/>
+                            <column id="quantity"/>
+                            <column id="totalPrice"/>
+                        </columns>
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <buttonsPanel>
+                            <button id="createButton" action="orderDetailTable.create"/>
+                            <button id="editButton" action="orderDetailTable.edit"/>
+                            <button id="removeButton" action="orderDetailTable.remove"/>
+                        </buttonsPanel>
+                    </groupTable>
+                </groupBox>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
